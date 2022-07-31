@@ -8,4 +8,4 @@ Do note, that the location data is NOT 100% accurate, but can provide an approxi
 This project is implemented in many programming languages so that you can run it however you want.
 As of now, this project is implemented in
 - JavaScript
-
+- Python
