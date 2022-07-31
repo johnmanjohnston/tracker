@@ -4,14 +4,14 @@ import requests
 import time
 import sys
 
-dataURL = "http://ipinfo.io"
+URL = "http://ipinfo.io"
 
 with open("logtemplate.txt", "r") as f:
     LOG_TEMPLATE = f.read()
 
 
 def get_data(): 
-    req_data = requests.get(dataURL).json()
+    req_data = requests.get(URL).json()
 
     data = f"""
 IP: {req_data["ip"]}
@@ -53,6 +53,7 @@ def log_data(data):
         to_log = to_log.replace("DATA", data)
 
         alog.write(to_log)
+        print(f"Logged; Log ID: {log_id}; {datetime.now()}")
 
 if __name__ == "__main__":
     main()

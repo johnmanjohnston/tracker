@@ -1,0 +1,12 @@
+                        _________
+                        |NEW LOG|
+=========================================================
+Date: DATE
+Log ID: LOGID
+
+DATA
+
+(Log data from http://ipinfo.io)
+(NOTE: This data is not guaranteed to be accurate)
+=========================================================
+

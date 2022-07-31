@@ -1,43 +1,36 @@
 const http = require("http");
 const fs = require("fs");
-const ipURL = "http://ipinfo.io/";
+const URL = "http://ipinfo.io/";
 
-function log(tolog) {
-    tolog = tolog.replace("DATE", new Date().toString())
-
-    // Get the count of how many logs have been made, by counting how many "NEW LOG" strings are in the log file
+function log(data) {
     const logCount = fs.readFileSync("./log.log", "utf8").split("NEW LOG").length - 1;
-    const hexLogCount = parseInt(logCount).toString(16);
+    const logID = "0x" + ((parseInt(logCount).toString(16)));
 
-    tolog = tolog.replace("LOGID", "0x" + (hexLogCount.toUpperCase()));
+    data = data.replace("DATE", new Date().toString())
+    data = data.replace("LOGID", logID);
 
-    fs.appendFile("./log.log", tolog + "\n", (err) => {
+    fs.appendFile("./log.log", data + "\n", (err) => {
         if (err) {
             console.log(err);
+            return;
         }
     });
+
+    console.log(`Logged; Log ID: ${logID}; ${new Date()}`);
 }
 
-const LOGTEMPLATE =
-`
-                        _________
-                        |NEW LOG|
-=========================================================
-Date: DATE
-Log ID: LOGID
-
-DATA
-
-(Log data from http://ipinfo.io)
-(NOTE: This data is not guaranteed to be accurate)
-=========================================================
-
-`
+const LOGTEMPLATE = fs.readFileSync("./logtemplate.txt", "utf8");
 
 function getDataAndLog() {
-    log(`Attempting to get data, ${new Date()}`)
+    fs.appendFile("./log.log", `Attempting to get data, ${new Date()}` + "\n", (err) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+    });
 
-    http.get(ipURL, (response) => {
+
+    http.get(URL, (response) => {
         response.on("data", (data) => {
             const requestData = JSON.parse(data);
             const details = 
@@ -56,8 +49,6 @@ Postal Code: ${requestData.postal}
 Timezone: ${requestData.timezone}`;
 
             log(LOGTEMPLATE.replace("DATA", details));
-
-            console.log(requestData);
         });
 
         }).on("error", (error) => {
@@ -73,4 +64,10 @@ function minToMs(min) {
     return min * 60 * 1000;
 }
 
-setInterval(getDataAndLog, minToMs(0.1));
+setInterval(getDataAndLog, minToMs(0.07));
+
+process.stdin.resume();
+process.on("SIGINT", function () {
+    console.log("\nStopping logging...");
+    process.exit(0);
+});
