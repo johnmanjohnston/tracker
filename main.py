@@ -11,24 +11,31 @@ with open("logtemplate.txt", "r") as f:
 
 
 def get_data(): 
-    req_data = requests.get(URL).json()
+    req_data = requests.get(URL)
 
-    data = f"""
-IP: {req_data["ip"]}
-Hostname: {req_data["hostname"]}
+    if (req_data.status_code == 200):
 
-Country Code: {req_data["country"]}
-City: {req_data["city"]}
-Region: {req_data["region"]}
+        req_data = req_data.json()
 
-Latitude: {req_data["loc"].split(",")[0]}
-Longitude: {req_data["loc"].split(",")[1]}
+        data = f"""
+    IP: {req_data["ip"]}
+    Hostname: {req_data["hostname"]}
 
-Postal Code: {req_data["postal"]}
-Timezone: {req_data["timezone"]}
+    Country Code: {req_data["country"]}
+    City: {req_data["city"]}
+    Region: {req_data["region"]}
+
+    Latitude: {req_data["loc"].split(",")[0]}
+    Longitude: {req_data["loc"].split(",")[1]}
+
+    Postal Code: {req_data["postal"]}
+    Timezone: {req_data["timezone"]}
     """
-
-    log_data(data)
+        log_data(data)
+        return
+    
+    print(f"Error: {req_data.status_code}")
+    log_data(f"Something went wrong whilst getting data; HTTP response code: {req_data.status_code}")
 
 def main():
     get_data()
