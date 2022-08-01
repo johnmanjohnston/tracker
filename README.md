@@ -28,3 +28,4 @@ Some changes that will happen in the future:
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
 - Implementation in more languages
+- Communication between the information and a web server, so that the logs can be accessed remotely
