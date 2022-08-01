@@ -9,5 +9,6 @@ This project is implemented in many programming languages so that you can run it
 As of now, this project is implemented in
 - JavaScript
 - Python
+- C++
 
 more languages to be added, soon.
