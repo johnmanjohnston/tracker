@@ -1,14 +1,18 @@
 const http = require("http");
 const fs = require("fs");
 const URL = "http://ipinfo.io/";
-const LOGTEMPLATE = fs.readFileSync("./logtemplate.txt", "utf8");
+
+const LOGTEMPLATE_FILEPATH = `${__dirname}/../logtemplate.txt`;
+const LOG_FILEPATH = `${__dirname}/../log.log`;
+
+const LOGTEMPLATE = fs.readFileSync(LOGTEMPLATE_FILEPATH, "utf8");
 
 function log(data) {
-    const logID = "0x" + (fs.readFileSync("./log.log", "utf8").split("NEW LOG").length - 1).toString(16);
+    const logID = "0x" + (fs.readFileSync(LOG_FILEPATH, "utf8").split("NEW LOG").length - 1).toString(16);
 
     data = data.replace("DATE", new Date().toString()).replace("LOGID", logID);
 
-    fs.appendFile("./log.log", data + "\n", (err) => {
+    fs.appendFile(LOG_FILEPATH, data + "\n", (err) => {
         if (err) {
             console.log(err);
             return;
@@ -20,7 +24,7 @@ function log(data) {
 
 
 function getDataAndLog() {
-    fs.appendFile("./log.log", `Attempting to get data, ${new Date()}` + "\n", (err) => {
+    fs.appendFile(LOG_FILEPATH, `Attempting to get data, ${new Date()}` + "\n", (err) => {
         if (err) {
             console.log(err);
             return;
