@@ -3,6 +3,8 @@
 #include <fstream>
 #include <ctime>
 #include <time.h>
+#include <chrono>
+#include <thread>
 #include <curl/curl.h>
 
 using namespace std;
@@ -118,10 +120,8 @@ size_t RecieveData(char *buffer, size_t itemsize, size_t itemcount, void* stream
     return itemsize * itemcount;
 }
 
-int main() {
+void RequestAndLog() {
     const char URL[] = "http://ipinfo.io";
-
-    SetLogTemplate();
 
     // Write to log file
     ofstream LogFile("../log.log", ios::app);
@@ -180,6 +180,14 @@ int main() {
     Details += "Timezone: " + Timezone + "\n";
 
     LogToFile(Details);
+
+    this_thread::sleep_for(chrono::seconds(5));
+    RequestAndLog();
+}
+
+int main() {
+    SetLogTemplate();
+    RequestAndLog();
 
     return 0;
 }
