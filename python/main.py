@@ -3,10 +3,14 @@ import re
 import requests
 import time
 import sys
+import os
 
 URL = "http://ipinfo.io"
+BASEPATH = os.path.dirname(os.path.abspath(__file__))
+LOG_TEMPLATE_FILEPATH = os.path.join(BASEPATH, "..", "logtemplate.txt")
+LOG_FILE_FILEPATH = os.path.join(BASEPATH, "..", "log.log")
 
-with open("logtemplate.txt", "r") as f:
+with open(LOG_TEMPLATE_FILEPATH, "r") as f:
     LOG_TEMPLATE = f.read()
 
 
@@ -18,24 +22,25 @@ def get_data():
         req_data = req_data.json()
 
         data = f"""
-    IP: {req_data["ip"]}
-    Hostname: {req_data["hostname"]}
+IP: {req_data["ip"]}
+Hostname: {req_data["hostname"]}
 
-    Country Code: {req_data["country"]}
-    City: {req_data["city"]}
-    Region: {req_data["region"]}
+Country Code: {req_data["country"]}
+City: {req_data["city"]}
+Region: {req_data["region"]}
 
-    Latitude: {req_data["loc"].split(",")[0]}
-    Longitude: {req_data["loc"].split(",")[1]}
+Latitude: {req_data["loc"].split(",")[0]}
+Longitude: {req_data["loc"].split(",")[1]}
 
-    Postal Code: {req_data["postal"]}
-    Timezone: {req_data["timezone"]}
+Postal Code: {req_data["postal"]}
+Timezone: {req_data["timezone"]}
     """
         log_data(data)
         return
     
     print(f"Error: {req_data.status_code}")
     log_data(f"Something went wrong whilst getting data; HTTP response code: {req_data.status_code}")
+
 
 def main():
     get_data()
@@ -48,11 +53,12 @@ def main():
             print("\nStopping logging...")  
             sys.exit(0)
 
+
 def log_data(data):
-    with open("log.log", "a") as alog:
+    with open(LOG_FILE_FILEPATH, "a") as alog:
         alog.write(f"Attempting to get data, {datetime.now()}\n")
 
-        with open("log.log", "r") as rlog:
+        with open(LOG_FILE_FILEPATH, "r") as rlog:
             log_count = len(re.findall("NEW LOG", rlog.read()))
             log_id = hex(log_count)
 
