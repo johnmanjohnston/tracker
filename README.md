@@ -17,5 +17,7 @@ more languages to be added, soon.
 
 ## Dependencies
 If using the JavaScript version, you will need to have Node.js installed.
+
 If using the Python version, you will need to have Python installed.
+
 If using the C++ version, you will need to have libcurl installed, as the file uses libcurl to fetch the data.
