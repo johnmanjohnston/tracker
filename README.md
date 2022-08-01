@@ -24,7 +24,7 @@ If using the C++ version, you will need to have libcurl installed, as the file u
 
 ## Progress
 This project is not done yet, and there are still changes to be made.
-Some of the upcoming plans include:
+Some features that I plan on including in the future:
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
 - Implementation in more languages
