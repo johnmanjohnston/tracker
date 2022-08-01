@@ -25,7 +25,7 @@ If using the C++ version, you will need to have libcurl installed, as the file u
 ## Progress
 This project is not done yet, and there are still changes to be made.
 Some changes that will happen in the future:
+- Communication between the information and a web server, so that the logs can be accessed remotely (IN PROGRESS)
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
 - Implementation in more languages
-- Communication between the information and a web server, so that the logs can be accessed remotely
