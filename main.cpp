@@ -1,18 +1,20 @@
 #include <iostream>
-#include <curl/curl.h>
 #include <string>
 #include <chrono>
 #include <thread>
+#include <curl/curl.h>
 #include <signal.h>
 #include <stdlib.h>
 
-// Store the response in this string, we'll need it later
 std::string ResponseString;
 int sessionLogCount;
+const char URL[] = "http://localhost:3000"; // If you're using your own server, change this variable
 
-// Exit handler
+// Exit handler logic   
 void ExitHandler(int sig) {
-    std::cout << "\nStopping logging, and exiting; " + std::to_string(sessionLogCount) + " log(s) written in this session" << std::endl;
+    curl_global_cleanup();
+    std::string strSessionLogCount = std::to_string(sessionLogCount);
+    std::cout << "\nStopping logging, and exiting; " + strSessionLogCount + " log(s) written in this session" << std::endl;
     exit(0);
 }
 
@@ -20,6 +22,7 @@ void ExitHandler(int sig) {
 size_t RecieveData(void *ptr, size_t size, size_t nmemb, void *stream) {
     size_t datasize = size * nmemb;
     ResponseString.append((char*)ptr, datasize);
+
     return datasize;
 }
 
@@ -37,9 +40,9 @@ void SleepethForHours(uint hours) {
 }
 
 void GetAndLog() {
+    // Exit handler
     signal(SIGINT, ExitHandler);
 
-    char URL[] = "http://localhost:3000";
     CURL *Handler;
 
     std::cout << "Sending request to log...\n";
@@ -51,7 +54,6 @@ void GetAndLog() {
 
     Response = curl_easy_perform(Handler);
 
-    // If response was okay
     if (Response == CURLE_OK) {
         sessionLogCount++;
     } else {
@@ -69,6 +71,8 @@ void GetAndLog() {
 }
 
 int main() {
+    std::cout << "Starting logging...";
     GetAndLog();
+
     return 0;
 }
