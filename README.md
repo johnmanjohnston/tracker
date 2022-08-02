@@ -9,7 +9,7 @@ In the `server` directory, you have `server.js` which is responsible for handlin
 Whenever a `GET` request is sent to the server, `server.js` will get the details of that client, and will log it.
 If it goes successfully, in response you'll get a response saying that the log request was recieved, and the ID of the log.
 
-The `main.cpp` file is responseible for sending a `GET` request to the server periodically, while the `server.js` file is for handling the server, and the files.
+The `main.cpp` file is responseible for sending a `GET` request to the server periodically, while the `server.js` file is for handling the server, and the tramsission of the details of the client to the log file.
 
 ## Dependencies
 - `request` npm package (I'll soon replace it to work with the `https` module instead, as `request` is deprecated)
