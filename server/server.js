@@ -26,23 +26,22 @@ http.createServer(function (req, res) {
             log = log.replace("[timezone]", data.timezone);
             log = log.replace("[postal]", data.postal);        
 
-            var logCount = 0;
+            // Find how many logs were there by seeing how many repetition of "NEW LOG" exist
+            var logCount = (logFileData.match(/NEW LOG/g) || []).length;
 
-            logFileData.split("\n").forEach((line) => {
-                if (line.includes("NEW LOG")) 
-                    logCount++;
-            });            
-
+            // The Log ID is just the count as a hexadecimal number, so that it can first more digits in less characters if there are many log messages
             var logID = `0x${logCount.toString(16)}`;
             var logDate = new Date();
 
             log = log.replace("[date]", String(logDate));
             log = log.replace("[id]", logID)    
 
+            // Try to log, for whatever reason it might faill, log to console
             try {
                 fs.appendFileSync(`${__dirname}/log.log`, log + "\n");
                 res.end(`Log request received. Log ID: ${logID}; Log date: ${logDate}`);
             } catch (err) {
+                console.log(`Couldn't log to file\n\nError: ${err}`);
                 res.end(`Error: ${err}`);
             }
         }
