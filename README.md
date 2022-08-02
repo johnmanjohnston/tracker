@@ -6,7 +6,9 @@ If you lose your devices, you could use this spyware to help get it's location.
 **Do note, that the location data is NOT 100% accurate, but can provide an approximate location.**
 
 ## Dependencies
-You will need Node.js installed to run the server and the `request` npm package, and you will need libcurl installed to send the HTTP requests to the server
+- `request` npm package (I'll soon replace it to work with the `https` module instead, as `request` is deprecated)
+- libcurl
+
 
 ## Progress
 This project is not done yet, and there are still changes to be made.
