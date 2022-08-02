@@ -9,6 +9,7 @@
 std::string ResponseString;
 int sessionLogCount;
 const char URL[] = "http://localhost:3000"; // If you're using your own server, change this variable
+const uint secondsBtwLogs = 5; 
 
 // Exit handler logic   
 void ExitHandler(int sig) {
@@ -39,40 +40,41 @@ void SleepethForHours(uint hours) {
     std::this_thread::sleep_for(std::chrono::hours(hours));
 }
 
-void GetAndLog() {
+void RequestAndLog() {
     // Exit handler
     signal(SIGINT, ExitHandler);
 
-    CURL *Handler;
+    CURL *RequestHandler;
 
     std::cout << "Sending request to log...\n";
     CURLcode Response;
-    Handler = curl_easy_init();
+    RequestHandler = curl_easy_init();
 
-    curl_easy_setopt(Handler, CURLOPT_URL, URL);
-    curl_easy_setopt(Handler, CURLOPT_WRITEFUNCTION, RecieveData);
+    curl_easy_setopt(RequestHandler, CURLOPT_URL, URL);
+    curl_easy_setopt(RequestHandler, CURLOPT_WRITEFUNCTION, RecieveData);
 
-    Response = curl_easy_perform(Handler);
+    Response = curl_easy_perform(RequestHandler);
 
     if (Response == CURLE_OK) {
         sessionLogCount++;
+        std::cout << "Logged successfully\n";
     } else {
         std::cout << "Error: " << Response << std::endl;
     }
 
     std::cout << ResponseString + "\n\n";
-    curl_easy_cleanup(Handler);
+    curl_easy_cleanup(RequestHandler);
 
     // ResponseString is a global variable, it doesn't reset on its own after we get the response
     // so we manually reset it here
     ResponseString = "";
-    SleepethForSecs(5);
-    GetAndLog();
+    SleepethForSecs(secondsBtwLogs);
+    RequestAndLog();
 }
 
 int main() {
-    std::cout << "Starting logging...";
-    GetAndLog();
+    std::cout << "Starting logging...\n\n";
+    RequestAndLog();
 
     return 0;
 }
