@@ -5,22 +5,8 @@ This is a project made to help track your devices. It gets the device's IP addre
 If you lose your devices, you could use this spyware to help get it's location.
 **Do note, that the location data is NOT 100% accurate, but can provide an approximate location.**
 
-The C++ version is probably the one you will want to use, as it is the fastest, compared to other versions.
-
-This project is implemented in many programming languages so that you can run it in the language of your preference.
-As of now, this project is implemented in
-- JavaScript
-- Python
-- C++
-
-more languages to be added, soon.
-
 ## Dependencies
-If using the JavaScript version, you will need to have Node.js installed.
-
-If using the Python version, you will need to have Python installed.
-
-If using the C++ version, you will need to have libcurl installed, as the file uses libcurl to fetch the data. If you're recompiling the code, do make sure to include `-lcurl` while compiling to include libcurl for the compiler.
+You will need Node.js installed to run the server (no npm packages), and you will need libcurl installed to send the HTTP requests to the server
 
 ## Progress
 This project is not done yet, and there are still changes to be made.
@@ -28,4 +14,3 @@ Some changes that will happen in the future:
 - Communication between the information and a web server, so that the logs can be accessed remotely (IN PROGRESS)
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
-- Implementation in more languages
