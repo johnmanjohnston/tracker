@@ -22,3 +22,7 @@ Some changes that will happen in the future:
 - Communication between the information and a web server, so that the logs can be accessed remotely
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
+
+## License
+[tracker](https://github.com/johnmanjohnston/tracker) is licensed under [MIT License](https://opensource.org/licenses/MIT).
+License information can also be found in the `LICENSE` file in the root directory of this repository.
