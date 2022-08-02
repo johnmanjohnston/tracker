@@ -12,11 +12,11 @@ http.createServer(function (req, res) {
             
             const data = JSON.parse(body);
             
-            const logfile = `${__dirname}/log.log`;
-            const logtemplate = fs.readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
+            const logFileData = fs.readFileSync(`${__dirname}/log.log`, "utf8");
+            const logTemplateData = fs.readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
 
             var log; 
-            log = logtemplate.replace("[ip]", data.ip);
+            log = logTemplateData.replace("[ip]", data.ip);
             log = log.replace("[hostname]", data.hostname);
             log = log.replace("[city]", data.city);1
             log = log.replace("[region]", data.region);
@@ -28,9 +28,10 @@ http.createServer(function (req, res) {
 
             var logCount = 0;
 
-            fs.readFileSync(logfile, "utf8").split("\n").forEach((line) => {
-                if (line.includes("NEW LOG")) logCount++;
-            });
+            logFileData.split("\n").forEach((line) => {
+                if (line.includes("NEW LOG")) 
+                    logCount++;
+            });            
 
             var logID = `0x${logCount.toString(16)}`;
             var logDate = new Date();
@@ -38,13 +39,12 @@ http.createServer(function (req, res) {
             log = log.replace("[date]", String(logDate));
             log = log.replace("[id]", logID)    
 
-            fs.appendFile(logfile, log + "\n", (err) => {
-                if (err) {
-                    res.end(`Something went wrong while logging Log ${logID}`);
-                }
-                console.log(`Log ${logID} written to ${logfile}`);
-                res.end(`Log request recieved; Log ID: ${logID}; Log date: ${logDate}`);
-            });
+            try {
+                fs.appendFileSync(`${__dirname}/log.log`, log + "\n");
+                res.end(`Log request received. Log ID: ${logID}; Log date: ${logDate}`);
+            } catch (err) {
+                res.end(`Error: ${err}`);
+            }
         }
     });
 }).listen(PORT);
