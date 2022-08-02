@@ -1,22 +1,18 @@
-const http = require("http");
-const request = require("request");
-const fs = require("fs");
-
-const PORT = 3000;
+import { createServer } from "http";
+import { readFileSync, appendFileSync } from "fs";
 const DETAILS_URL = "https://ipinfo.io";
 
-http.createServer(function (req, res) {
+createServer(function (req, res) {
     request(DETAILS_URL, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.writeHead(200, { "Content-Type": "application/json" });
+            res.writeHead(200, { "Content-Type": "text/plain" });
             
             const data = JSON.parse(body);
             
-            const logFileData = fs.readFileSync(`${__dirname}/log.log`, "utf8");
-            const logTemplateData = fs.readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
+            const logFileData = readFileSync(`${__dirname}/log.log`, "utf8");
+            const logTemplateData = readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
 
-            var log; 
-            log = logTemplateData.replace("[ip]", data.ip);
+            var log = logTemplateData.replace("[ip]", data.ip);
             log = log.replace("[hostname]", data.hostname);
             log = log.replace("[city]", data.city);1
             log = log.replace("[region]", data.region);
@@ -29,7 +25,6 @@ http.createServer(function (req, res) {
             // Find how many logs were there by seeing how many repetition of "NEW LOG" exist
             var logCount = (logFileData.match(/NEW LOG/g) || []).length;
 
-            // The Log ID is just the count as a hexadecimal number, so that it can first more digits in less characters if there are many log messages
             var logID = `0x${logCount.toString(16)}`;
             var logDate = new Date();
 
@@ -38,7 +33,7 @@ http.createServer(function (req, res) {
 
             // Try to log, for whatever reason it might faill, log to console
             try {
-                fs.appendFileSync(`${__dirname}/log.log`, log + "\n");
+                appendFileSync(`${__dirname}/log.log`, log + "\n");
                 res.end(`Log request received. Log ID: ${logID}; Log date: ${logDate}`);
             } catch (err) {
                 console.log(`Couldn't log to file\n\nError: ${err}`);
@@ -46,6 +41,5 @@ http.createServer(function (req, res) {
             }
         }
     });
-}).listen(PORT);
-
-console.log(`Server running on http://localhost:${PORT}`);
+}).listen(3000);
+console.log("Server running");
