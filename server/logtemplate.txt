@@ -8,14 +8,14 @@
 
 + IP Address: [ip]
 + Hostname: [hostname]
-+ 
+ 
 + Country Code: [country]
 + City: [city]
 + Region: [region]
-+ 
+ 
 + Latitude: [lat]
 + Longitude: [lon]
-+ 
+ 
 + Postal Code: [postal]
 + Timezone: [timezone]
 
