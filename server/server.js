@@ -29,9 +29,7 @@ http.createServer(function (req, res) {
             var logCount = 0;
 
             fs.readFileSync(logfile, "utf8").split("\n").forEach((line) => {
-                if (line.includes("NEW LOG")) {
-                    logCount++;
-                }
+                if (line.includes("NEW LOG")) logCount++;
             });
 
             var logID = `0x${logCount.toString(16)}`;
