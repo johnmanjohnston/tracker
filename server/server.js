@@ -1,16 +1,17 @@
-import { createServer } from "http";
-import { readFileSync, appendFileSync } from "fs";
+const http = require("http");
+const request = require("request");
+const fs = require("fs");
 const DETAILS_URL = "https://ipinfo.io";
 
-createServer(function (req, res) {
+http.createServer(function (req, res) {
     request(DETAILS_URL, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.writeHead(200, { "Content-Type": "text/plain" });
             
             const data = JSON.parse(body);
             
-            const logFileData = readFileSync(`${__dirname}/log.log`, "utf8");
-            const logTemplateData = readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
+            const logFileData = fs.readFileSync(`${__dirname}/log.log`, "utf8");
+            const logTemplateData = fs.readFileSync(`${__dirname}/logtemplate.txt`, "utf8");
 
             var log = logTemplateData.replace("[ip]", data.ip);
             log = log.replace("[hostname]", data.hostname);
@@ -33,7 +34,7 @@ createServer(function (req, res) {
 
             // Try to log, for whatever reason it might faill, log to console
             try {
-                appendFileSync(`${__dirname}/log.log`, log + "\n");
+                fs.appendFileSync(`${__dirname}/log.log`, log + "\n");
                 res.end(`Log request received. Log ID: ${logID}; Log date: ${logDate}`);
             } catch (err) {
                 console.log(`Couldn't log to file\n\nError: ${err}`);

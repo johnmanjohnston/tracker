@@ -1,12 +1,25 @@
                         _________
                         |NEW LOG|
 =========================================================
-Date: DATE
-Log ID: LOGID
++ Date: [date]
++ Log ID: [id]
 
-DATA
+=========================================================
+
++ IP Address: [ip]
++ Hostname: [hostname]
++ 
++ Country Code: [country]
++ City: [city]
++ Region: [region]
++ 
++ Latitude: [lat]
++ Longitude: [lon]
++ 
++ Postal Code: [postal]
++ Timezone: [timezone]
 
 (Log data from http://ipinfo.io)
-(NOTE: This data is not guaranteed to be accurate)
+(NOTE: This data is not guaranteed to be 100% accurate)
 =========================================================
 
