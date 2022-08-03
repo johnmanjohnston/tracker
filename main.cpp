@@ -8,14 +8,16 @@
 
 std::string ResponseString;
 int sessionLogCount;
-const char URL[] = "http://localhost:3000"; // If you're using your own server, change this variable
-const uint secondsBtwLogs = 5; 
+const char URL[] = "http://localhost:8080"; // If you're using your own server, change this variable
+uint secondsBtwLogs = 5; 
 
 // Exit handler logic   
 void ExitHandler(int sig) {
     curl_global_cleanup();
+
     std::string strSessionLogCount = std::to_string(sessionLogCount);
     std::cout << "\nStopping logging, and exiting; " + strSessionLogCount + " log(s) written in this session" << std::endl;
+    
     exit(0);
 }
 
@@ -58,11 +60,11 @@ void RequestAndLog() {
     if (Response == CURLE_OK) {
         sessionLogCount++;
         std::cout << "Logged successfully\n";
+        std::cout << ResponseString + "\n\n";
     } else {
         std::cout << "Error: " << Response << std::endl;
     }
 
-    std::cout << ResponseString + "\n\n";
     curl_easy_cleanup(RequestHandler);
 
     // ResponseString is a global variable, it doesn't reset on its own after we get the response
@@ -72,7 +74,11 @@ void RequestAndLog() {
     RequestAndLog();
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc > 1) {
+        secondsBtwLogs = atoi(argv[1]);
+    }
+    
     std::cout << "Starting logging...\n\n";
     RequestAndLog();
 
