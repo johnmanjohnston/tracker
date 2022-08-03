@@ -3,11 +3,10 @@
 =========================================================
 + Date: [date]
 + Log ID: [id]
-
 =========================================================
-
 + IP Address: [ip]
 + Hostname: [hostname]
++ Platform: [platform]
  
 + Country Code: [country]
 + City: [city]
@@ -22,4 +21,3 @@
 (Log data from http://ipinfo.io)
 (NOTE: This data is not guaranteed to be 100% accurate)
 =========================================================
-
