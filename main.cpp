@@ -9,7 +9,7 @@
 std::string ResponseString;
 int sessionLogCount;
 const char URL[] = "http://localhost:8080"; // If you're using your own server, change this variable
-uint secondsBtwLogs = 5; 
+uint secondsBtwLogs; 
 
 // Exit handler logic   
 void ExitHandler(int sig) {
@@ -76,7 +76,17 @@ void RequestAndLog() {
 
 int main(int argc, char *argv[]) {
     if (argc > 1) {
-        secondsBtwLogs = atoi(argv[1]);
+        try {
+            secondsBtwLogs = std::stoi(argv[1]);
+
+            if (secondsBtwLogs < 1) {
+                std::cout << "You must specify a value greater than 0 for the time between logs; defaulting to 5" << std::endl;
+                secondsBtwLogs = 5;
+            }
+        } catch (std::invalid_argument) {
+            std::cout << "Invalid argument, using default of 5 seconds" << std::endl;
+            secondsBtwLogs = 5;
+        }
     }
     
     std::cout << "Starting logging...\n\n";
