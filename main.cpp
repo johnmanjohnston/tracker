@@ -75,11 +75,15 @@ void RequestAndLog() {
 }
 
 int main(int argc, char *argv[]) {
+    if (secondsBtwLogs == 0) {
+        secondsBtwLogs = 5;
+    }
+
     if (argc > 1) {
         try {
             secondsBtwLogs = std::stoi(argv[1]);
 
-            if (secondsBtwLogs < 1) {
+            if (secondsBtwLogs < 1 || argv[1][0] == '-') {
                 std::cout << "You must specify a value greater than 0 for the time between logs; defaulting to 5" << std::endl;
                 secondsBtwLogs = 5;
             }
