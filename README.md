@@ -19,7 +19,7 @@ The `main.cpp` file is responseible for sending a `GET` request to the server pe
 This project is not done yet, and there are still changes to be made.
 Some changes that will happen in the future:
 
-- Communication between the information and a web server, so that the logs can be accessed remotely
+- Remote access of logs using a web server (in progress)
 - Higher accuracy IP geolocation
 - Cleaner, readable, and more performant code
 
