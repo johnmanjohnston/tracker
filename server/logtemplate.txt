@@ -6,7 +6,6 @@
 =========================================================
 + IP Address: [ip]
 + Hostname: [hostname]
-+ Platform: [platform]
  
 + Country Code: [country]
 + City: [city]
