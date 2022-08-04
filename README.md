@@ -12,7 +12,7 @@ If it goes successfully, in response you'll get a response saying that the log r
 The `main.cpp` file is responseible for sending a `GET` request to the server periodically, while the `server.js` file is for handling the server, and the tramsission of the details of the client to the log file.
 
 ## Dependencies
-- [`request`](https://www.npmjs.com/package/request) npm package
+- [request](https://www.npmjs.com/package/request) npm package
 - [libcurl](https://curl.se/libcurl/)
 
 # Use Instructions
