@@ -4,9 +4,7 @@ const fs = require("fs");
 const DETAILS_URL = "https://ipinfo.io";
 
 http.createServer(function (req, res) {
-    if (req.url.includes("log")) {
-        console.log("Request to view logs detected");
-        
+    if (req.url === "/logs" || req.url === "/logs/") {
         fs.readFile(`${__dirname}/log.log`, (err, data) => {
             if (err) {
                 res.writeHead(500, { "Content-Type": "text/plain" });
@@ -16,6 +14,7 @@ http.createServer(function (req, res) {
 
                 if (String(data) === "") {
                     res.end("The log file is empty.");
+                    return;
                 }
 
                 res.end(data);
@@ -54,6 +53,10 @@ http.createServer(function (req, res) {
                 res.end(`Log request received. Log ID: ${logID}; Log date: ${logDate}`);
             }
         });
+    } else {
+        res.write("404: Page not found");
+        res.end();
     }
+
 }).listen(8080);
 console.log("Server running");
