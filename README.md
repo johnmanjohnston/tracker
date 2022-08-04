@@ -1,8 +1,8 @@
 # tracker
 
 ## About
-This is a project made to help track your devices. It gets the device's IP address, longitude and latitude, time, date, country, city, etc.
-If you lose your devices, you could use this spyware to help get it's location.
+This is a project made to track your devices. It gets the device's IP address, and other location details.
+The information is gained by sending a HTTP request to [`https://ipinfo.io`](https://ipinfo.io).
 **Do note, that the location data is NOT 100% accurate, but can provide an approximate location.**
 
 In the `server` directory, you have `server.js` which is responsible for handling the server, and the modification of the log file.
@@ -12,16 +12,11 @@ If it goes successfully, in response you'll get a response saying that the log r
 The `main.cpp` file is responseible for sending a `GET` request to the server periodically, while the `server.js` file is for handling the server, and the tramsission of the details of the client to the log file.
 
 ## Dependencies
-- [`request`](https://www.npmjs.com/package/request) npm package (I'll soon replace it to work with the `https` module instead, as `request` is deprecated)
+- [`request`](https://www.npmjs.com/package/request) npm package
 - [libcurl](https://curl.se/libcurl/)
 
-## Progress
-This project is not done yet, and there are still changes to be made.
-Some changes that will happen in the future:
-
-- Remote access of logs using a web server (in progress)
-- Higher accuracy IP geolocation
-- Cleaner, readable, and more performant code
+# Use Instructions
+To use this to actually keep logging and keep track of your device's IP and location, you'll need your own web server. You'll have to make sure that the `server.js` file is in charge of the server, and you'll have to update the `URL[]` variable in `main.cpp` to the URL of your web server. Then, on the device you want to send the log requests, compile `main.cpp`, and run the output file.
 
 ## License
 [tracker](https://github.com/johnmanjohnston/tracker) is licensed under [MIT License](https://opensource.org/licenses/MIT).
