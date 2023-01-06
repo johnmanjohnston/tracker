@@ -3,7 +3,7 @@
 ## About
 This is a project made to track your devices. It gets the device's IP address, and other location details.
 The information is gained by sending a HTTP request to [`https://ipinfo.io`](https://ipinfo.io).
-**Do note, that the location data is NOT 100% accurate, but can provide an approximate location.**
+**Do note, that the IP geolocation data is NOT 100% accurate, but can provide an approximate location.**
 
 In the `server` directory, you have `server.js` which is responsible for handling the server, and the modification of the log file.
 Whenever a `GET` request is sent to the server, `server.js` will get the details of that client, and will log it.
