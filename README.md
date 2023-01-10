@@ -16,7 +16,7 @@ The `main.cpp` file is responseible for sending a `GET` request to the server pe
 - [libcurl](https://curl.se/libcurl/)
 
 # Use Instructions
-To use this to actually keep logging and keep track of your device's IP and location, you'll need your own web server (in the repo, it just uses `http://localhost:8080` for a demo). You'll have to make sure that the `server.js` file is in charge of the server, and you'll have to update the `URL[]` variable in `main.cpp` to the URL of your web server. Then, on the device you want to send the log requests, compile `main.cpp`, and run the output file.
+To use this to actually keep logging and keep track of your device's IP and location, you'll need your own web server (in the repo, it just uses `http://localhost:8080` by default). You'll have to make sure that the `server.js` file is in charge of the server, and you'll have to update the `URL[]` variable in `main.cpp` to the URL of your web server. Then, on the device you want to send the log requests, compile `main.cpp`, and run the output file.
 
 ## License
 [tracker](https://github.com/johnmanjohnston/tracker) is licensed under [MIT License](https://opensource.org/licenses/MIT).
